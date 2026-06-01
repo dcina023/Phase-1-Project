@@ -1,21 +1,18 @@
-# App Concept
+# About My Project
 
-# Feature 1- Display Image Menu by Fetching Array of Objects From Server
+## Interactive Dance Image Blog
 
-## As a user, I want to see all images displayed in a menu at the top of the page.  Details: Fetch data from json-server automatically and render image menu immediately when the page loads.
+### As a user, I want to view images, comment, like and add my own content to a single page application that focuses on specifically on the dance experience. The images posted create an interactive art experience where I can look, read, and post my own "stories". 
 
-# Feature 2-Click Function To Display Image Details, Caption, Likes, Comment.
+## SPA Features
 
-## As a user, I want to be able to click on each image and have it enlarge below the menu with the image details, caption, and likes capabilities. 
+### Images loaded from db.json server and rendered onto DOM in an image menu at the top of the page
 
-# Feature 3-Form Input For User to Add Personal Images and Details
+### Click on an image and it enlarges underneath the image menu, the description will be available that includes, caption, like, and comment capabilities.
 
-## As a user, I want to be able to add my own image, with caption, and description to the page. When I add the image it will be added to the image menu.
+### User-generated content (UGC) submission form - allows user to upload their own image and caption and submit their content to get added to the image menu
 
-# Feature 4- Image Carousel Scroll For Image Menu 
+### As more UGC is added to the image menu, the layout dynamically transitions into a horizontal scrolling menu. This swipeable gallery allows for endless content storage without disrupting the page layout.
 
-## As a user, I want my added images to get added to the image menu at the top, as more images are added I will have the option to scroll through the top menu and access my content
+### Create an interactive visual experience where standard static images or live images respond intelligetly to user cursor interactions with mouseenter and mouseleave events. Mouseenter triggers css scale transforms to zoom in, lowers overlays to reveal text, or changes an image to display a short looping "live" video/GIF. Mouseleave, resets the CSS transforms to their default static state (zooming out) and hides overlays or reverts to the static image. 
 
-# Feature 5- Mouseenter/Mouse Leave 
-
-## As a user, I want to be able to zoom into the photos and see movement on live images.
