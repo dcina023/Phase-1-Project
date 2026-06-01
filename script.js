@@ -6,22 +6,17 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      data.forEach(photo => {
-        // renderImages(photo);
-    })
-    //   data.forEach(renderImages);
+      data.forEach((photo) => {});
     });
 
   function renderImages(photo) {
-    console.log(photo, "photo");
-
-    let linkElement = document.createElement("a");
+    const linkElement = document.createElement("a");
     linkElement.href = "#";
 
     const imgElement = document.createElement("img");
 
-    imgElement.src = photo.src
-    imgElement.alt = photo.title 
+    imgElement.src = photo.src;
+    imgElement.alt = photo.title;
     imgElement.className = "image-menu";
 
     linkElement.appendChild(imgElement);
