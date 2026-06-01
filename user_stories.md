@@ -13,12 +13,11 @@
 
 ### As a user, I want to be able to add my own image, with caption, and description to the page. When I add the image it will be added to the image menu.
 
-## Feature 4- Image Carousel Scroll For Image Menu 
-
-### As a user, I want my added images to get added to the image menu at the top, as more images are added I will have the option to scroll through the top menu and access my content
-
-## Feature 5- Mouseenter/Mouse Leave 
+## Feature 4- Mouseenter/Mouse Leave 
 
 ### As a user, I want to be able to zoom into the photos and see movement on live images.
 
+## Feature 5- Image Carousel Scroll For Image Menu 
+
+### As a user, I want my added images to get added to the image menu at the top, as more images are added I will have the option to scroll through the top menu and access my content.
 
