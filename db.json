@@ -1,0 +1,26 @@
+{
+  "posts": [
+    {
+      "id": "1", 
+      "title": "Dancing in LACMA",
+      "src": "http://localhost:3000/images/IMG_9574.jpg",
+      "caption": "Traveled to California and go to experience the beauty of LACMA lights",
+      "likes": 0
+    },
+    {
+      "id": "2",
+      "title": "Dancing Under the Bridge",
+      "src": "http://localhost:3000/images/IMG_9575.JPG",
+      "caption": "Explored Chicago scenary and found a picturesque moment under the train",
+      "likes": 0
+    },
+    {
+      "id": "3",
+      "title": "Exploring In The Studio",
+      "src": "http://localhost:3000/images/481EB365-38C9-468B-BEE1-53A034491655.JPG",
+      "caption": "Sunlit studio session, couldn't help but capture the beauty of golden-hour",
+      "likes": 0
+    }
+  ]
+}
+
