@@ -16,9 +16,16 @@
     },
     {
       "id": "3",
-      "title": "Exploring In The Studio",
-      "src": "http://localhost:3000/images/481EB365-38C9-468B-BEE1-53A034491655.JPG",
-      "caption": "Sunlit studio session, couldn't help but capture the beauty of golden-hour",
+      "title": "Sunlit Dance Studio",
+      "src": "http://localhost:3000/images/IMG_9577.JPG",
+      "caption": "Explored Chicago scenary and found a picturesque moment under the train",
+      "likes": 0
+    },
+    {
+      "id": "4",
+      "title": "Dancing Under the Bridge",
+      "src": "http://localhost:3000/images/IMG_9578.JPG",
+      "caption": "Explored Chicago scenary and found a picturesque moment under the train",
       "likes": 0
     }
   ]
