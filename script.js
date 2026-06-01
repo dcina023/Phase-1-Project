@@ -1,5 +1,5 @@
 const imageMenu = document.getElementById("image-menu-container");
-const IMAGE_BASE_URL = "http://localhost:3000/";
+const baseUrl = "http://localhost:3000/";
 
 document.addEventListener("DOMContentLoaded", () => {
   fetch("http://localhost:3000/posts")
