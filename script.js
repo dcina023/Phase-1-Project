@@ -78,11 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
     imageMenu.appendChild(linkElement);
   }
 
-  ///feature 3
-  //create a form event for users to add their own objects with title, image, and caption, and submit their objects to be appended to image-menu-
-  // create HTML fields for form user inputs
-  //create click event for user inputs to be added to db.json database
-
   function addUserContent(newContent) {
     fetch(url, {
       method: "POST",
