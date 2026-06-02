@@ -1,24 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-
+  <head>
+    <meta charset="UTF-8" />
     <script src="script.js" defer></script>
-        
-    <link rel="stylesheet" href ="style.css">
-</head>
-<header id="image-menu-container">
-    <div class="image-menu">
-    <img src="http://localhost:3000/images/IMG_9574.jpg" alt="" class="grid-photo">
-    <img src="http://localhost:3000/images/IMG_9575.JPG" alt="" class="grid-photo">
-    <img src="http://localhost:3000/images/IMG_9577.JPG" alt="" class="grid-photo">
-    <img src="http://localhost:3000/images/IMG_9578.JPG" alt="" class="grid-photo">
-    
-   </div>
+    <link rel="stylesheet" href="style.css" />
+    <title>Image Menu</title>
+  </head>
+  <body>
+    <header id="image-menu-container">
+      <div class="image-menu"></div>
     </header>
-   <body>
-
-   </body>
-
-   </body>
- </html>
+    <main>
+      <section class="item-details-container">
+        <div class="item-info">
+          <h2 class=""item-title>Title/Caption</h2>
+          <p class="item-description">Detailed description</p>
+        </div>
+      <div class="likes-wrapper">
+          <button class="like-button">Like</button>
+          <span class="icon">❤️</span><span class="like-count">0</span>
+      </div>
+      <div class="item-comments-section">
+        <h3>Comments</h3>
+        <ul class="comments-list">
+        </ul>
+       <form class="comment-form">
+          <input type="text" placeholder="Add a comment..." required>
+          <button type="submit">Post</button>
+        </form>
+      </div>
+      </section>
+    </main>
+  </body>
+</html>

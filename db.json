@@ -1,7 +1,7 @@
 {
   "posts": [
     {
-      "id": "1", 
+      "id": "1",
       "title": "Dancing in LACMA",
       "src": "http://localhost:3000/images/IMG_9574.jpg",
       "caption": "Traveled to California and go to experience the beauty of LACMA lights",
@@ -18,16 +18,15 @@
       "id": "3",
       "title": "Sunlit Dance Studio",
       "src": "http://localhost:3000/images/IMG_9577.JPG",
-      "caption": "Explored Chicago scenary and found a picturesque moment under the train",
+      "caption": "Captured golden-hour in sunlit studio",
       "likes": 0
     },
     {
       "id": "4",
-      "title": "Dancing Under the Bridge",
+      "title": "Studio Image For Video Shoot",
       "src": "http://localhost:3000/images/IMG_9578.JPG",
-      "caption": "Explored Chicago scenary and found a picturesque moment under the train",
+      "caption": "Company photo taken for video shoot",
       "likes": 0
     }
   ]
 }
-
