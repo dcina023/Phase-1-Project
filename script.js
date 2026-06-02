@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Fetch failed:", err));
 
-
   function likesComponent(photo) {
     let count = photo.likesCount || 0;
 
@@ -63,24 +62,39 @@ document.addEventListener("DOMContentLoaded", () => {
       const displayImg = document.createElement("img");
       displayImg.src = photo.src;
       displayImg.alt = photo.title;
+      displayImg.className = "interactive-focus image"
 
-      displayImg.addEventListener("mouseenter", (e) => {
-        console.log("mouseenter!")
-        displayImg.style.transform ="scale(1.05"
-      })
+      displayImg.addEventListener("mousemove", (e) => {
+       console.log("mousemove")
+        const rect = displayImg.getBoundingClientRect()
+
+       const x = (e.clientX - rect.left) / rect.width - 0.5
+       const y = (e.clientY - rect.top) / rect.height - 0.5
+
+       const maxRotateX = -y * 20
+       const maxRotateY = x * 20
+
+       displayImg.style.transform = `perspective(1000px) rotateX(${maxRotateX}deg) rotateY(${maxRotateY}deg) scale3d(1.05, 1.05, 1.05)`
+      });
 
       displayImg.addEventListener("mouseleave", (e) => {
-        displayImg.style.transform = "none"
-      })
+        displayImg.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)'
+      });
 
       const likesWrapper = document.querySelector(".likes-wrapper");
+      const outputDiv = document.querySelector("#output")
 
       detailsSection.replaceChildren(titleEl, captionEl, displayImg);
 
       if (likesWrapper) {
         detailsSection.appendChild(likesWrapper);
       }
-
+      if (userForm) {
+        detailsSection.appendChild(userForm);
+      }
+      if (outputDiv) {
+        detailsSection.appendChild(outputDiv);
+      }
       likesComponent(photo);
     });
 
@@ -121,14 +135,4 @@ document.addEventListener("DOMContentLoaded", () => {
     addUserContent(newContent);
     userForm.reset();
   });
-
-  // /feature 4
-  // /create a mouseenter and mouseleave event when a users cursor goes onto an image to zoom in or out
-  
-
-// })
-
-
-    
-  
 });
