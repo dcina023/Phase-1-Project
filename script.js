@@ -1,8 +1,10 @@
+const url = "http://localhost:3000/posts";
 const imageMenu = document.querySelector(".image-menu");
 const detailsSection = document.querySelector(".item-details-container");
+const userForm = document.querySelector("#user-form");
 
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("http://localhost:3000/posts")
+  fetch(url)
     .then((res) => {
       if (!res.ok) throw new Error("Backend server error");
       return res.json();
@@ -75,4 +77,38 @@ document.addEventListener("DOMContentLoaded", () => {
     linkElement.appendChild(imgElement);
     imageMenu.appendChild(linkElement);
   }
+
+  function addUserContent(newContent) {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newContent),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to save data");
+        return res.json();
+      })
+      .then((savedPhoto) => {
+        renderImages(savedPhoto);
+      })
+      .catch((err) => console.error("Error adding post:", err));
+  }
+
+  userForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(userForm);
+
+    const newContent = {
+      title: formData.get("title"),
+      src: formData.get("src"),
+      caption: formData.get("caption"),
+      likesCount: 0,
+    };
+
+    addUserContent(newContent);
+    userForm.reset();
+  });
 });
