@@ -1,6 +1,5 @@
-
-
-const imageMenu = document.querySelector(".image-menu"); 
+const imageMenu = document.querySelector(".image-menu");
+const detailsSection = document.querySelector(".item-details-container");
 
 document.addEventListener("DOMContentLoaded", () => {
   fetch("http://localhost:3000/posts")
@@ -21,26 +20,32 @@ document.addEventListener("DOMContentLoaded", () => {
     linkElement.href = "#";
 
     const imgElement = document.createElement("img");
-    
-    
-    imgElement.src = photo.src; 
-    
 
-    imgElement.alt = photo.title; 
-    imgElement.className = "grid-photo"; 
+    imgElement.src = photo.src;
+
+    imgElement.alt = photo.title;
+    imgElement.className = "grid-photo";
 
     imgElement.addEventListener("click", (e) => {
-        console.log("clicked")
-        ///logic for click event, when we click on imgElement,
-        ///we want the rest of the objects details to be listed
-        //and to append the image to another area of the page below the image menu
-        
-    })
+      console.log("clicked");
+
+      const titleEl = document.createElement("h2");
+      titleEl.textContent = photo.title;
+
+      const captionEl = document.createElement("p");
+      captionEl.textContent = photo.caption;
+
+      const likesEl = document.createElement("span");
+      likesEl.textContent = `Likes: ${photo.likes}`;
+
+      const displayImg = document.createElement("img");
+      displayImg.src = photo.src;
+      displayImg.alt = photo.title;
+
+      detailsSection.replaceChildren(titleEl, captionEl, likesEl, displayImg);
+    });
 
     linkElement.appendChild(imgElement);
     imageMenu.appendChild(linkElement);
   }
-
-  
 });
-
