@@ -31,6 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     imgElement.addEventListener("click", (e) => {
         console.log("clicked")
+        ///logic for click event, when we click on imgElement,
+        ///we want the rest of the objects details to be listed
+        //and to append the image to another area of the page below the image menu
+        
     })
 
     linkElement.appendChild(imgElement);
