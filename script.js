@@ -28,10 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    likesDisplay.textContent = count;
-    likesBtn.textContent = "👍 Like";
-    likesBtn.classList.remove("liked");
-
     const newLikesBtn = likesBtn.cloneNode(true);
     likesBtn.parentNode.replaceChild(newLikesBtn, likesBtn);
 
