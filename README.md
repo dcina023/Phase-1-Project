@@ -6,11 +6,11 @@
 
 ## SPA Features
 
-### Initial images loaded from seed.js file and rendered onto DOM in an image menu at the top of the page. 
+### Initial images loaded from db.json server file and rendered onto DOM in an image menu at the top of the page. 
 
 ### Click on an image and it enlarges underneath the image menu, a description will be available that includes, caption, like, and comment capabilities.
 
-### User-generated content (UGC) submission form -- allows user to upload their own image and caption, and set the  likes initially to 0. They can then submit their content and add it to the image menu.
+### User-generated content (UGC) submission form -- allows user to upload their own image and caption, and set the likes initially to 0. They can then submit their content and add it to the image menu.
 
 ### Create an interactive visual experience where standard static images or live images respond intelligetly to user cursor interactions with mouseenter and mouseleave events. Mouseenter triggers css scale transforms to zoom in, lowers overlays to reveal text, or changes an image to display a short looping "live" video/GIF. Mouseleave, resets the CSS transforms to their default static state (zooming out) and hides overlays or reverts to the static image. 
 
