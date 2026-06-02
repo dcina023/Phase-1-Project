@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Fetch failed:", err));
 
+
   function likesComponent(photo) {
     let count = photo.likesCount || 0;
 
@@ -62,6 +63,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const displayImg = document.createElement("img");
       displayImg.src = photo.src;
       displayImg.alt = photo.title;
+
+      displayImg.addEventListener("mouseenter", (e) => {
+        console.log("mouseenter!")
+        displayImg.style.transform ="scale(1.05"
+      })
+
+      displayImg.addEventListener("mouseleave", (e) => {
+        displayImg.style.transform = "none"
+      })
 
       const likesWrapper = document.querySelector(".likes-wrapper");
 
@@ -111,4 +121,14 @@ document.addEventListener("DOMContentLoaded", () => {
     addUserContent(newContent);
     userForm.reset();
   });
+
+  // /feature 4
+  // /create a mouseenter and mouseleave event when a users cursor goes onto an image to zoom in or out
+  
+
+// })
+
+
+    
+  
 });
