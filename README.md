@@ -8,7 +8,7 @@
 
 ### Initial images loaded from db.json server file and rendered onto DOM in an image menu at the top of the page. 
 
-### Click on an image and it enlarges underneath the image menu, a description will be available that includes, caption, like, and comment capabilities.
+### Click on an image and it enlarges underneath the image menu, a description will be available that includes, caption, and like capability.
 
 ### User-generated content (UGC) submission form -- allows user to upload their own image and caption, and set the likes initially to 0. They can then submit their content and add it to the image menu.
 
