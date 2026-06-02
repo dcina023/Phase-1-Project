@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch((err) => console.error("Fetch failed:", err));
 
   function likesComponent(photo) {
-    console.log(photo, "PHOTO");
     let count = photo.likesCount || 0;
 
     const likesDisplay = document.querySelector(".like-count");
@@ -55,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     imgElement.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("clicked");
 
       const titleEl = document.createElement("h2");
       titleEl.textContent = photo.title;
