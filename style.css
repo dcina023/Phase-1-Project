@@ -25,19 +25,15 @@ p {
 .image-menu {
   display: inline-block;
   padding: 10px 20px;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(220px, 1fr);
-  justify-content: center;
-  max-width: 1200px;
-  width: 100%;
-  gap: 20px;
+  width: 220px; 
+  vertical-align: top; 
 }
 
 .grid-photo {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    border-radius: 6px
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .item-details-container {
