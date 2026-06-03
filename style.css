@@ -12,14 +12,19 @@ p {
 }
 
 #image-menu-container {
-  width: 100%;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
   padding: 24px;
   box-sizing: border-box;
   background-color: #130113;
 }
 
 .image-menu {
-  display: grid;
+  display: inline-block;
+  padding: 10px 20px;
   grid-auto-flow: column;
   grid-auto-columns: minmax(220px, 1fr);
   justify-content: center;
