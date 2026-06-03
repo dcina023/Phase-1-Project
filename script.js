@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
        if (outputDiv) {
          detailsSection.appendChild(outputDiv);
        }
-       
      });
 
      linkElement.appendChild(imgElement);
