@@ -12,27 +12,28 @@ p {
 }
 
 #image-menu-container {
-  width: 100%;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
   padding: 24px;
   box-sizing: border-box;
   background-color: #130113;
 }
 
 .image-menu {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(220px, 1fr);
-  justify-content: center;
-  max-width: 1200px;
-  width: 100%;
-  gap: 20px;
+  display: inline-block;
+  padding: 10px 20px;
+  width: 220px; 
+  vertical-align: top; 
 }
 
 .grid-photo {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    border-radius: 6px
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .item-details-container {
