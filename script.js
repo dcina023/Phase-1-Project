@@ -59,7 +59,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
        function likesComponent(photo, likesWrapper) {
          let count = photo.likesCount || 0;
+         let liked = false
 
+         if (!liked) {
+          count++
+          liked = true
+         } else if (liked) {
+           count--;
+           liked = false;
+         }
+          
          const likesDisplay = likesWrapper.querySelector(".like-count");
          const likesBtn = likesWrapper.querySelector(".like-button");
 
@@ -68,6 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
          likesDisplay.textContent = count;
 
+         ///where we target a PATCH request to persist likeCount to the backend
+         
          const newLikesBtn = likesBtn.cloneNode(true);
          newLikesBtn.classList.remove("hidden", "liked");
          newLikesBtn.innerText = "Like";
