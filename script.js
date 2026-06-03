@@ -10,96 +10,113 @@ document.addEventListener("DOMContentLoaded", () => {
       return res.json();
     })
     .then((data) => {
-      console.log("Data received successfully:", data);
       data.forEach((photo) => {
         renderImages(photo);
       });
     })
     .catch((err) => console.error("Fetch failed:", err));
 
-   function renderImages(photo) {
-     const linkElement = document.createElement("a");
-     linkElement.href = "#";
+  function renderImages(photo) {
+    const linkElement = document.createElement("a");
+    linkElement.href = "#";
 
-     const imgElement = document.createElement("img");
-     imgElement.src = photo.src;
-     imgElement.alt = photo.title;
-     imgElement.className = "grid-photo";
+    const imgElement = document.createElement("img");
+    imgElement.src = photo.src;
+    imgElement.alt = photo.title;
+    imgElement.className = "grid-photo";
 
-     imgElement.addEventListener("click", (e) => {
-       e.preventDefault();
+    imgElement.addEventListener("click", (e) => {
+      e.preventDefault();
 
-       const titleEl = document.createElement("h2");
-       titleEl.textContent = photo.title;
+      const titleEl = document.createElement("h2");
+      titleEl.textContent = photo.title;
 
-       const captionEl = document.createElement("p");
-       captionEl.textContent = photo.caption;
+      const captionEl = document.createElement("p");
+      captionEl.textContent = photo.caption;
 
-       const displayImg = document.createElement("img");
-       displayImg.src = photo.src;
-       displayImg.alt = photo.title;
-       displayImg.className = "interactive-focus image";
+      const displayImg = document.createElement("img");
+      displayImg.src = photo.src;
+      displayImg.alt = photo.title;
+      displayImg.className = "interactive-focus image";
 
-       displayImg.addEventListener("mousemove", (e) => {
-         const rect = displayImg.getBoundingClientRect();
+      displayImg.addEventListener("mousemove", (e) => {
+        const rect = displayImg.getBoundingClientRect();
 
-         const x = (e.clientX - rect.left) / rect.width - 0.5;
-         const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-         const maxRotateX = -y * 20;
-         const maxRotateY = x * 20;
+        const maxRotateX = -y * 20;
+        const maxRotateY = x * 20;
 
-         displayImg.style.transform = `perspective(1000px) rotateX(${maxRotateX}deg) rotateY(${maxRotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-       });
+        displayImg.style.transform = `perspective(1000px) rotateX(${maxRotateX}deg) rotateY(${maxRotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+      });
 
-       displayImg.addEventListener("mouseleave", () => {
-         displayImg.style.transform =
-           "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-       });
+      displayImg.addEventListener("mouseleave", () => {
+        displayImg.style.transform =
+          "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+      });
 
-       function likesComponent(photo, likesWrapper) {
-         let count = photo.likesCount || 0;
+      function likesComponent(photo, likesWrapper) {
+        let count = photo.likesCount || 0;
+        let liked = false
 
-         const likesDisplay = likesWrapper.querySelector(".like-count");
-         const likesBtn = likesWrapper.querySelector(".like-button");
+        const likesDisplay = likesWrapper.querySelector(".like-count");
+        const likesBtn = likesWrapper.querySelector(".like-button");
 
-         detailsSection.appendChild(likesWrapper);
-         likesWrapper.classList.remove("hidden");
+        detailsSection.appendChild(likesWrapper);
+        likesWrapper.classList.remove("hidden");
 
-         likesDisplay.textContent = count;
+        likesDisplay.textContent = count;
 
-         const newLikesBtn = likesBtn.cloneNode(true);
-         newLikesBtn.classList.remove("hidden", "liked");
-         newLikesBtn.innerText = "Like";
+        const newLikesBtn = likesBtn.cloneNode(true);
+        newLikesBtn.classList.remove("hidden", "liked");
+        newLikesBtn.innerText = "Like";
 
-         likesBtn.replaceWith(newLikesBtn);
+        likesBtn.replaceWith(newLikesBtn);
 
-         newLikesBtn.addEventListener("click", () => {
-           count++;
-           newLikesBtn.classList.add("liked");
-           newLikesBtn.innerText = "❤️ Liked";
-           likesDisplay.textContent = count;
-         });
-       }
+        newLikesBtn.addEventListener("click", () => {
+          count++
 
-       const likesWrapper = document.querySelector(".likes-wrapper");
-       const outputDiv = document.querySelector("#output");
+          fetch(`${url}/${photo.id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({ likesCount: count }),
+          })
+            .then((res) => {
+              if (!res.ok) throw new Error("PATCH request error");
+              return res.json();
+            })
+            .then((updatedPhoto) => {
+              newLikesBtn.classList.add("liked");
+              newLikesBtn.innerText = "❤️ Liked";
+              likesDisplay.textContent = count;
+            })
+            .catch((err) => console.error("Fetch failed:", err));
+        });
+      }
 
-       detailsSection.replaceChildren(titleEl, captionEl, displayImg);
+      const likesWrapper = document.querySelector(".likes-wrapper");
+      const outputDiv = document.querySelector("#output");
 
-       likesComponent(photo, likesWrapper);
+      detailsSection.replaceChildren(titleEl, captionEl, displayImg);
 
-       if (userForm) {
-         detailsSection.appendChild(userForm);
-       }
-       if (outputDiv) {
-         detailsSection.appendChild(outputDiv);
-       }
-     });
+      likesComponent(photo, likesWrapper);
 
-     linkElement.appendChild(imgElement);
-     imageMenu.appendChild(linkElement);
-   }
+      if (userForm) {
+        detailsSection.appendChild(userForm);
+      }
+
+      if (outputDiv) {
+        detailsSection.appendChild(outputDiv);
+      }
+    });
+
+    linkElement.appendChild(imgElement);
+    imageMenu.appendChild(linkElement);
+  }
 
   function addUserContent(newContent) {
     fetch(url, {
