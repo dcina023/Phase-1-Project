@@ -89,10 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
        likesComponent(photo, likesWrapper);
 
-      //  if (likesWrapper) {
-      //    detailsSection.appendChild(likesWrapper);
-      //    likesWrapper.classList.remove("hidden");
-      //  }
        if (userForm) {
          detailsSection.appendChild(userForm);
        }
