@@ -27,8 +27,28 @@
       "src": "http://localhost:3000/images/IMG_9578.JPG",
       "caption": "Company photo taken for video shoot",
       "likes": 0
+    },
+    {
+      "title": "dance",
+      "src": "file:///Users/daniellecina/Development/coding-projects/phase-1-project/index.html#",
+      "caption": "dance",
+      "likesCount": 0,
+      "id": "d5bemzlSYP0"
+    },
+    {
+      "title": "adada",
+      "src": "http://localhost:3000/images/IMG_9578.JPG",
+      "caption": "ada",
+      "likesCount": 0,
+      "id": "CzqK26bDHw0"
+    },
+    {
+      "title": "ada",
+      "src": "http://localhost:3000/images/IMG_9578.JPG",
+      "caption": "ada",
+      "likesCount": 0,
+      "id": "O82tBujAS-4"
     }
-
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }

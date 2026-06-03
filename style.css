@@ -56,8 +56,27 @@ p {
     max-width: 100%;
 }
 
+#user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  max-width: 200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #item-title {
+    display: flex;
+    justify-content: center;
+  }
+
+}
 .like-button {
-     display: inline-flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
@@ -74,7 +93,11 @@ p {
 
 }
 
-.interactive-focus-image {
+.hidden {
+  display: none;
+}
+
+.interactive-focus image {
    max-width: 100%;
   height: auto;
   display: block;
@@ -86,8 +109,3 @@ p {
   will-change: transform;
   transition: transform 0.1s ease-out; 
 }
-
-/* .displayImg.hovered {
-  transform: scale(1.2) rotate(15deg);
-
-} */

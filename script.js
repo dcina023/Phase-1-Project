@@ -17,90 +17,94 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Fetch failed:", err));
 
-  function likesComponent(photo) {
-    let count = photo.likesCount || 0;
+   function renderImages(photo) {
+     const linkElement = document.createElement("a");
+     linkElement.href = "#";
 
-    const likesDisplay = document.querySelector(".like-count");
-    const likesBtn = document.querySelector(".like-button");
+     const imgElement = document.createElement("img");
+     imgElement.src = photo.src;
+     imgElement.alt = photo.title;
+     imgElement.className = "grid-photo";
 
-    if (!likesDisplay || !likesBtn) {
-      console.error(
-        "Critical Error: HTML elements for likes do not exist in the DOM!",
-      );
-      return;
-    }
+     imgElement.addEventListener("click", (e) => {
+       e.preventDefault();
 
-    const newLikesBtn = likesBtn.cloneNode(true);
-    likesBtn.parentNode.replaceChild(newLikesBtn, likesBtn);
+       const titleEl = document.createElement("h2");
+       titleEl.textContent = photo.title;
 
-    newLikesBtn.addEventListener("click", () => {
-      count++;
-      newLikesBtn.classList.add("liked");
-      newLikesBtn.innerText = "❤️ Liked";
-      likesDisplay.textContent = count;
-    });
-  }
+       const captionEl = document.createElement("p");
+       captionEl.textContent = photo.caption;
 
-  function renderImages(photo) {
-    const linkElement = document.createElement("a");
-    linkElement.href = "#";
+       const displayImg = document.createElement("img");
+       displayImg.src = photo.src;
+       displayImg.alt = photo.title;
+       displayImg.className = "interactive-focus image";
 
-    const imgElement = document.createElement("img");
-    imgElement.src = photo.src;
-    imgElement.alt = photo.title;
-    imgElement.className = "grid-photo";
+       displayImg.addEventListener("mousemove", (e) => {
+         const rect = displayImg.getBoundingClientRect();
 
-    imgElement.addEventListener("click", (e) => {
-      e.preventDefault();
+         const x = (e.clientX - rect.left) / rect.width - 0.5;
+         const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-      const titleEl = document.createElement("h2");
-      titleEl.textContent = photo.title;
+         const maxRotateX = -y * 20;
+         const maxRotateY = x * 20;
 
-      const captionEl = document.createElement("p");
-      captionEl.textContent = photo.caption;
+         displayImg.style.transform = `perspective(1000px) rotateX(${maxRotateX}deg) rotateY(${maxRotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+       });
 
-      const displayImg = document.createElement("img");
-      displayImg.src = photo.src;
-      displayImg.alt = photo.title;
-      displayImg.className = "interactive-focus image"
+       displayImg.addEventListener("mouseleave", () => {
+         displayImg.style.transform =
+           "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+       });
 
-      displayImg.addEventListener("mousemove", (e) => {
-       console.log("mousemove")
-        const rect = displayImg.getBoundingClientRect()
+       function likesComponent(photo, likesWrapper) {
+         let count = photo.likesCount || 0;
 
-       const x = (e.clientX - rect.left) / rect.width - 0.5
-       const y = (e.clientY - rect.top) / rect.height - 0.5
+         const likesDisplay = likesWrapper.querySelector(".like-count");
+         const likesBtn = likesWrapper.querySelector(".like-button");
 
-       const maxRotateX = -y * 20
-       const maxRotateY = x * 20
+         detailsSection.appendChild(likesWrapper);
+         likesWrapper.classList.remove("hidden");
 
-       displayImg.style.transform = `perspective(1000px) rotateX(${maxRotateX}deg) rotateY(${maxRotateY}deg) scale3d(1.05, 1.05, 1.05)`
-      });
+         likesDisplay.textContent = count;
 
-      displayImg.addEventListener("mouseleave", (e) => {
-        displayImg.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)'
-      });
+         const newLikesBtn = likesBtn.cloneNode(true);
+         newLikesBtn.classList.remove("hidden", "liked");
+         newLikesBtn.innerText = "Like";
 
-      const likesWrapper = document.querySelector(".likes-wrapper");
-      const outputDiv = document.querySelector("#output")
+         likesBtn.replaceWith(newLikesBtn);
 
-      detailsSection.replaceChildren(titleEl, captionEl, displayImg);
+         newLikesBtn.addEventListener("click", () => {
+           count++;
+           newLikesBtn.classList.add("liked");
+           newLikesBtn.innerText = "❤️ Liked";
+           likesDisplay.textContent = count;
+         });
+       }
 
-      if (likesWrapper) {
-        detailsSection.appendChild(likesWrapper);
-      }
-      if (userForm) {
-        detailsSection.appendChild(userForm);
-      }
-      if (outputDiv) {
-        detailsSection.appendChild(outputDiv);
-      }
-      likesComponent(photo);
-    });
+       const likesWrapper = document.querySelector(".likes-wrapper");
+       const outputDiv = document.querySelector("#output");
 
-    linkElement.appendChild(imgElement);
-    imageMenu.appendChild(linkElement);
-  }
+       detailsSection.replaceChildren(titleEl, captionEl, displayImg);
+
+       likesComponent(photo, likesWrapper);
+
+      //  if (likesWrapper) {
+      //    detailsSection.appendChild(likesWrapper);
+      //    likesWrapper.classList.remove("hidden");
+      //  }
+       if (userForm) {
+         detailsSection.appendChild(userForm);
+       }
+       if (outputDiv) {
+         detailsSection.appendChild(outputDiv);
+       }
+       
+     });
+
+     linkElement.appendChild(imgElement);
+     imageMenu.appendChild(linkElement);
+   }
 
   function addUserContent(newContent) {
     fetch(url, {

@@ -12,6 +12,6 @@
 
 ### User-generated content (UGC) submission form -- allows user to upload their own image and caption, and set the likes initially to 0. They can then submit their content and add it to the image menu.
 
-### Create an interactive visual experience where standard static images or live images respond intelligetly to user cursor interactions with mouseenter and mouseleave events. Mouseenter triggers css scale transforms to zoom in, lowers overlays to reveal text, or changes an image to display a short looping "live" video/GIF. Mouseleave, resets the CSS transforms to their default static state (zooming out) and hides overlays or reverts to the static image. 
+### Create an interactive visual experience where standard static images or live images respond intelligetly to user cursor interactions with mousemove and mouseleave events. Mousemove triggers parallax/3d tilt creating a visually engaging sense of depth, and mouseleave returns image to its static state. 
 
 ### As more UGC is added to the image menu, the layout dynamically transitions into a horizontal scrolling menu. This swipeable gallery allows for endless content storage without disrupting the page layout.
