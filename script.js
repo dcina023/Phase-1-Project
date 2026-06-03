@@ -17,66 +17,89 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((err) => console.error("Fetch failed:", err));
 
-  function likesComponent(photo) {
-    let count = photo.likesCount || 0;
+   function renderImages(photo) {
+     const linkElement = document.createElement("a");
+     linkElement.href = "#";
 
-    const likesDisplay = document.querySelector(".like-count");
-    const likesBtn = document.querySelector(".like-button");
+     const imgElement = document.createElement("img");
+     imgElement.src = photo.src;
+     imgElement.alt = photo.title;
+     imgElement.className = "grid-photo";
 
-    if (!likesDisplay || !likesBtn) {
-      console.error(
-        "Critical Error: HTML elements for likes do not exist in the DOM!",
-      );
-      return;
-    }
+     imgElement.addEventListener("click", (e) => {
+       e.preventDefault();
 
-    const newLikesBtn = likesBtn.cloneNode(true);
-    likesBtn.parentNode.replaceChild(newLikesBtn, likesBtn);
+       const titleEl = document.createElement("h2");
+       titleEl.textContent = photo.title;
 
-    newLikesBtn.addEventListener("click", () => {
-      count++;
-      newLikesBtn.classList.add("liked");
-      newLikesBtn.innerText = "❤️ Liked";
-      likesDisplay.textContent = count;
-    });
-  }
+       const captionEl = document.createElement("p");
+       captionEl.textContent = photo.caption;
 
-  function renderImages(photo) {
-    const linkElement = document.createElement("a");
-    linkElement.href = "#";
+       const displayImg = document.createElement("img");
+       displayImg.src = photo.src;
+       displayImg.alt = photo.title;
+       displayImg.className = "interactive-focus image";
 
-    const imgElement = document.createElement("img");
-    imgElement.src = photo.src;
-    imgElement.alt = photo.title;
-    imgElement.className = "grid-photo";
+       displayImg.addEventListener("mousemove", (e) => {
+         const rect = displayImg.getBoundingClientRect();
 
-    imgElement.addEventListener("click", (e) => {
-      e.preventDefault();
+         const x = (e.clientX - rect.left) / rect.width - 0.5;
+         const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-      const titleEl = document.createElement("h2");
-      titleEl.textContent = photo.title;
+         const maxRotateX = -y * 20;
+         const maxRotateY = x * 20;
 
-      const captionEl = document.createElement("p");
-      captionEl.textContent = photo.caption;
+         displayImg.style.transform = `perspective(1000px) rotateX(${maxRotateX}deg) rotateY(${maxRotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+       });
 
-      const displayImg = document.createElement("img");
-      displayImg.src = photo.src;
-      displayImg.alt = photo.title;
+       displayImg.addEventListener("mouseleave", () => {
+         displayImg.style.transform =
+           "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+       });
 
-      const likesWrapper = document.querySelector(".likes-wrapper");
+       function likesComponent(photo, likesWrapper) {
+         let count = photo.likesCount || 0;
 
-      detailsSection.replaceChildren(titleEl, captionEl, displayImg);
+         const likesDisplay = likesWrapper.querySelector(".like-count");
+         const likesBtn = likesWrapper.querySelector(".like-button");
 
-      if (likesWrapper) {
-        detailsSection.appendChild(likesWrapper);
-      }
+         detailsSection.appendChild(likesWrapper);
+         likesWrapper.classList.remove("hidden");
 
-      likesComponent(photo);
-    });
+         likesDisplay.textContent = count;
 
-    linkElement.appendChild(imgElement);
-    imageMenu.appendChild(linkElement);
-  }
+         const newLikesBtn = likesBtn.cloneNode(true);
+         newLikesBtn.classList.remove("hidden", "liked");
+         newLikesBtn.innerText = "Like";
+
+         likesBtn.replaceWith(newLikesBtn);
+
+         newLikesBtn.addEventListener("click", () => {
+           count++;
+           newLikesBtn.classList.add("liked");
+           newLikesBtn.innerText = "❤️ Liked";
+           likesDisplay.textContent = count;
+         });
+       }
+
+       const likesWrapper = document.querySelector(".likes-wrapper");
+       const outputDiv = document.querySelector("#output");
+
+       detailsSection.replaceChildren(titleEl, captionEl, displayImg);
+
+       likesComponent(photo, likesWrapper);
+
+       if (userForm) {
+         detailsSection.appendChild(userForm);
+       }
+       if (outputDiv) {
+         detailsSection.appendChild(outputDiv);
+       }
+     });
+
+     linkElement.appendChild(imgElement);
+     imageMenu.appendChild(linkElement);
+   }
 
   function addUserContent(newContent) {
     fetch(url, {
