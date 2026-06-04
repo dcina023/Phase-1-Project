@@ -10,44 +10,43 @@ document.addEventListener("DOMContentLoaded", () => {
       return res.json();
     })
     .then((data) => {
-      data.forEach((photo) => {
-        renderImages(photo);
-      });
+      data.forEach((post) => renderImages(post));
     })
     .catch((err) => console.error("Fetch failed:", err));
 
-  function renderImages(photo) {
-    const linkElement = document.createElement("a");
-    linkElement.href = "#";
+  function createElements(tag, attributes = {}) {
+    const element = document.createElement(tag);
+    Object.assign(element, attributes);
+    return element;
+  }
 
-    const imgElement = document.createElement("img");
-    imgElement.src = photo.src;
-    imgElement.alt = photo.title;
-    imgElement.className = "grid-photo";
+  function renderImages(post) {
+    const linkElement = createElements("a", { href: "#" });
+    const imgElement = createElements("img", {
+      src: post.src,
+      alt: post.title,
+      className: "grid-photo",
+    });
 
     imgElement.addEventListener("click", (e) => {
       e.preventDefault();
-
       const titleEl = document.createElement("h2");
-      titleEl.textContent = photo.title;
+      titleEl.textContent = post.title;
 
       const captionEl = document.createElement("p");
-      captionEl.textContent = photo.caption;
+      captionEl.textContent = post.caption;
 
       const displayImg = document.createElement("img");
-      displayImg.src = photo.src;
-      displayImg.alt = photo.title;
+      displayImg.src = post.src;
+      displayImg.alt = post.title;
       displayImg.className = "interactive-focus image";
 
       displayImg.addEventListener("mousemove", (e) => {
         const rect = displayImg.getBoundingClientRect();
-
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
-
         const maxRotateX = -y * 20;
         const maxRotateY = x * 20;
-
         displayImg.style.transform = `perspective(1000px) rotateX(${maxRotateX}deg) rotateY(${maxRotateY}deg) scale3d(1.05, 1.05, 1.05)`;
       });
 
@@ -56,62 +55,53 @@ document.addEventListener("DOMContentLoaded", () => {
           "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
       });
 
-      function likesComponent(photo, likesWrapper) {
-        let count = photo.likesCount || 0;
-        let liked = false
-
+      function likesComponent(postData, likesWrapper) {
+        let count = postData.likesCount || 0;
         const likesDisplay = likesWrapper.querySelector(".like-count");
         const likesBtn = likesWrapper.querySelector(".like-button");
 
         detailsSection.appendChild(likesWrapper);
         likesWrapper.classList.remove("hidden");
-
         likesDisplay.textContent = count;
 
         const newLikesBtn = likesBtn.cloneNode(true);
         newLikesBtn.classList.remove("hidden", "liked");
         newLikesBtn.innerText = "Like";
-
         likesBtn.replaceWith(newLikesBtn);
 
         newLikesBtn.addEventListener("click", () => {
-          count++
+          count++;
+          updateLikes(postData.id, count)
+            .then(() => {
+              newLikesBtn.classList.add("liked");
+              newLikesBtn.innerText = "❤️";
+              likesDisplay.textContent = count;
+            })
+            .catch((err) => console.error("Fetch failed:", err));
+        });
 
-          fetch(`${url}/${photo.id}`, {
+        function updateLikes(id, newCount) {
+          return fetch(`${url}/${id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
-            body: JSON.stringify({ likesCount: count }),
-          })
-            .then((res) => {
-              if (!res.ok) throw new Error("PATCH request error");
-              return res.json();
-            })
-            .then((updatedPhoto) => {
-              newLikesBtn.classList.add("liked");
-              newLikesBtn.innerText = "❤️ Liked";
-              likesDisplay.textContent = count;
-            })
-            .catch((err) => console.error("Fetch failed:", err));
-        });
+            body: JSON.stringify({ likesCount: newCount }),
+          }).then((res) => {
+            if (!res.ok) throw new Error("PATCH request error");
+            return res.json();
+          });
+        }
       }
 
       const likesWrapper = document.querySelector(".likes-wrapper");
       const outputDiv = document.querySelector("#output");
 
       detailsSection.replaceChildren(titleEl, captionEl, displayImg);
-
-      likesComponent(photo, likesWrapper);
-
-      if (userForm) {
-        detailsSection.appendChild(userForm);
-      }
-
-      if (outputDiv) {
-        detailsSection.appendChild(outputDiv);
-      }
+      if (likesWrapper) likesComponent(post, likesWrapper);
+      if (userForm) detailsSection.appendChild(userForm);
+      if (outputDiv) detailsSection.appendChild(outputDiv);
     });
 
     linkElement.appendChild(imgElement);
@@ -130,25 +120,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!res.ok) throw new Error("Failed to save data");
         return res.json();
       })
-      .then((savedPhoto) => {
-        renderImages(savedPhoto);
+      .then((savedPost) => {
+        renderImages(savedPost);
       })
       .catch((err) => console.error("Error adding post:", err));
   }
 
-  userForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+  if (userForm) {
+    userForm.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    const formData = new FormData(userForm);
+      const formData = new FormData(userForm);
+      const newContent = {
+        title: formData.get("title"),
+        src: formData.get("src"),
+        caption: formData.get("caption"),
+        likesCount: 0,
+      };
 
-    const newContent = {
-      title: formData.get("title"),
-      src: formData.get("src"),
-      caption: formData.get("caption"),
-      likesCount: 0,
-    };
-
-    addUserContent(newContent);
-    userForm.reset();
-  });
+      addUserContent(newContent);
+      userForm.reset();
+    });
+  }
 });
