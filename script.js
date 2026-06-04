@@ -30,16 +30,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     imgElement.addEventListener("click", (e) => {
       e.preventDefault();
-      const titleEl = document.createElement("h2");
-      titleEl.textContent = post.title;
+      const titleElement = createElements("h2", {
+        textContent: post.title,
+    })
 
-      const captionEl = document.createElement("p");
-      captionEl.textContent = post.caption;
-
-      const displayImg = document.createElement("img");
-      displayImg.src = post.src;
-      displayImg.alt = post.title;
-      displayImg.className = "interactive-focus image";
+     const captionElement = createElements("p", {
+      textContent: post.caption,
+     })
+      
+     const displayImg = createElements("img", {
+         src: post.src,
+         alt: post.title,
+         className: "interactive-focus image",
+       });
 
       displayImg.addEventListener("mousemove", (e) => {
         const rect = displayImg.getBoundingClientRect();
@@ -98,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const likesWrapper = document.querySelector(".likes-wrapper");
       const outputDiv = document.querySelector("#output");
 
-      detailsSection.replaceChildren(titleEl, captionEl, displayImg);
+      detailsSection.replaceChildren(titleElement, captionEl, displayImg);
       if (likesWrapper) likesComponent(post, likesWrapper);
       if (userForm) detailsSection.appendChild(userForm);
       if (outputDiv) detailsSection.appendChild(outputDiv);
