@@ -22,19 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderImages(post) {
     const linkElement = createElements("a", { href: "#" });
-    const imgElement = createElements("img", { src: post.src, alt: post.title, className: "grid-photo",
-    });
+    const imgElement = createElements("img", { src: post.src, alt: post.title, className: "grid-photo",});
 
     imgElement.addEventListener("click", (e) => {
       e.preventDefault();
-      const titleElement = createElements("h2", { textContent: post.title,
-    })
+     const titleElement = createElements("h2", { textContent: post.title })
 
-     const captionElement = createElements("p", { textContent: post.caption,
-     })
+     const captionElement = createElements("p", { textContent: post.caption })
       
-     const displayImg = createElements("img", { src: post.src, alt: post.title, className: "interactive-focus image",
-       });
+     const displayImg = createElements("img", { src: post.src, alt: post.title, className: "interactive-focus image" });
 
       displayImg.addEventListener("mousemove", (e) => {
         const rect = displayImg.getBoundingClientRect();

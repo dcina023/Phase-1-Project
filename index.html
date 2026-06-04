@@ -12,30 +12,37 @@
     </header>
     <main>
       <h1>Cinergy Dance Photo Gallery</h1>
+
       <section class="item-details-container">
         <div class="item-info" id="tilt-card">
           <h2 class="item-title">Share Your Content</h2>
-          <p class="item-description">Welcome! This is a photo gallery application that creates a space to share your dance experiences and interact with others uploaded content</p>
+          <p class="item-description">
+            Welcome! This is a photo gallery application that creates a space to
+            share your dance experiences and interact with others uploaded
+            content
+          </p>
         </div>
+
         <div class="likes-wrapper hidden">
           <button class="like-button">Like</button>
           <span class="like-count"></span>
         </div>
+
         <form id="user-form">
           <label for="title">Title:</label>
-          <input type="text" id="title" name="title" required>
+          <input type="text" id="title" name="title" required />
 
           <label for="caption">Caption:</label>
-          <input type="text" id="caption" name="caption" required>
+          <input type="text" id="caption" name="caption" required />
 
           <label for="image">Upload Image:</label>
-          <input type="text" name="src" placeholder="Image URL" required>
+          <input type="text" name="src" placeholder="Image URL" required />
 
           <button type="submit">Submit</button>
         </form>
-        <div id="output"></div>
       </section>
+
+      <div id="output"></div>
     </main>
   </body>
 </html>
-
