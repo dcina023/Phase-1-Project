@@ -22,15 +22,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderImages(post) {
     const linkElement = createElements("a", { href: "#" });
-    const imgElement = createElements("img", { src: post.src, alt: post.title, className: "grid-photo",});
+    const imgElement = createElements("img", {
+      src: post.src,
+      alt: post.title,
+      className: "grid-photo",
+    });
 
     imgElement.addEventListener("click", (e) => {
       e.preventDefault();
-     const titleElement = createElements("h2", { textContent: post.title })
+      const titleElement = createElements("h2", { textContent: post.title });
 
-     const captionElement = createElements("p", { textContent: post.caption })
-      
-     const displayImg = createElements("img", { src: post.src, alt: post.title, className: "interactive-focus image" });
+      const captionElement = createElements("p", { textContent: post.caption });
+
+      const displayImg = createElements("img", {
+        src: post.src,
+        alt: post.title,
+        className: "interactive-focus image",
+      });
 
       displayImg.addEventListener("mousemove", (e) => {
         const rect = displayImg.getBoundingClientRect();
@@ -59,45 +67,45 @@ document.addEventListener("DOMContentLoaded", () => {
     imageMenu.appendChild(linkElement);
   }
 
-    function likesComponent(postData, likesWrapper) {
-      let count = postData.likesCount || 0;
-      const likesDisplay = likesWrapper.querySelector(".like-count");
-      const likesBtn = likesWrapper.querySelector(".like-button");
+  function likesComponent(postData, likesWrapper) {
+    let count = postData.likesCount || 0;
+    const likesDisplay = likesWrapper.querySelector(".like-count");
+    const likesBtn = likesWrapper.querySelector(".like-button");
 
-      detailsSection.appendChild(likesWrapper);
-      likesWrapper.classList.remove("hidden");
-      likesDisplay.textContent = count;
+    detailsSection.appendChild(likesWrapper);
+    likesWrapper.classList.remove("hidden");
+    likesDisplay.textContent = count;
 
-      const newLikesBtn = likesBtn.cloneNode(true);
-      newLikesBtn.classList.remove("hidden", "liked");
-      newLikesBtn.innerText = "Like";
-      likesBtn.replaceWith(newLikesBtn);
+    const newLikesBtn = likesBtn.cloneNode(true);
+    newLikesBtn.classList.remove("hidden", "liked");
+    newLikesBtn.innerText = "Like";
+    likesBtn.replaceWith(newLikesBtn);
 
-      newLikesBtn.addEventListener("click", () => {
-        count++;
-        updateLikes(postData.id, count)
-          .then(() => {
-            newLikesBtn.classList.add("liked");
-            newLikesBtn.innerText = "❤️";
-            likesDisplay.textContent = count;
-          })
-          .catch((err) => console.error("Fetch failed:", err));
+    newLikesBtn.addEventListener("click", () => {
+      count++;
+      updateLikes(postData.id, count)
+        .then(() => {
+          newLikesBtn.classList.add("liked");
+          newLikesBtn.innerText = "❤️";
+          likesDisplay.textContent = count;
+        })
+        .catch((err) => console.error("Fetch failed:", err));
+    });
+
+    function updateLikes(id, newCount) {
+      return fetch(`${url}/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ likesCount: newCount }),
+      }).then((res) => {
+        if (!res.ok) throw new Error("PATCH request error");
+        return res.json();
       });
-
-     function updateLikes(id, newCount) {
-        return fetch(`${url}/${id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({ likesCount: newCount }),
-        }).then((res) => {
-          if (!res.ok) throw new Error("PATCH request error");
-          return res.json();
-        });
-      }
     }
+  }
 
   function addUserContent(newContent) {
     fetch(url, {
