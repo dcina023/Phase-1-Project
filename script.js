@@ -46,46 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
           "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
       });
 
-      function likesComponent(postData, likesWrapper) {
-        let count = postData.likesCount || 0;
-        const likesDisplay = likesWrapper.querySelector(".like-count");
-        const likesBtn = likesWrapper.querySelector(".like-button");
-
-        detailsSection.appendChild(likesWrapper);
-        likesWrapper.classList.remove("hidden");
-        likesDisplay.textContent = count;
-
-        const newLikesBtn = likesBtn.cloneNode(true);
-        newLikesBtn.classList.remove("hidden", "liked");
-        newLikesBtn.innerText = "Like";
-        likesBtn.replaceWith(newLikesBtn);
-
-        newLikesBtn.addEventListener("click", () => {
-          count++;
-          updateLikes(postData.id, count)
-            .then(() => {
-              newLikesBtn.classList.add("liked");
-              newLikesBtn.innerText = "❤️";
-              likesDisplay.textContent = count;
-            })
-            .catch((err) => console.error("Fetch failed:", err));
-        });
-
-        function updateLikes(id, newCount) {
-          return fetch(`${url}/${id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({ likesCount: newCount }),
-          }).then((res) => {
-            if (!res.ok) throw new Error("PATCH request error");
-            return res.json();
-          });
-        }
-      }
-
       const likesWrapper = document.querySelector(".likes-wrapper");
       const outputDiv = document.querySelector("#output");
 
@@ -98,6 +58,46 @@ document.addEventListener("DOMContentLoaded", () => {
     linkElement.appendChild(imgElement);
     imageMenu.appendChild(linkElement);
   }
+
+    function likesComponent(postData, likesWrapper) {
+      let count = postData.likesCount || 0;
+      const likesDisplay = likesWrapper.querySelector(".like-count");
+      const likesBtn = likesWrapper.querySelector(".like-button");
+
+      detailsSection.appendChild(likesWrapper);
+      likesWrapper.classList.remove("hidden");
+      likesDisplay.textContent = count;
+
+      const newLikesBtn = likesBtn.cloneNode(true);
+      newLikesBtn.classList.remove("hidden", "liked");
+      newLikesBtn.innerText = "Like";
+      likesBtn.replaceWith(newLikesBtn);
+
+      newLikesBtn.addEventListener("click", () => {
+        count++;
+        updateLikes(postData.id, count)
+          .then(() => {
+            newLikesBtn.classList.add("liked");
+            newLikesBtn.innerText = "❤️";
+            likesDisplay.textContent = count;
+          })
+          .catch((err) => console.error("Fetch failed:", err));
+      });
+
+     function updateLikes(id, newCount) {
+        return fetch(`${url}/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ likesCount: newCount }),
+        }).then((res) => {
+          if (!res.ok) throw new Error("PATCH request error");
+          return res.json();
+        });
+      }
+    }
 
   function addUserContent(newContent) {
     fetch(url, {
