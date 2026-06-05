@@ -1,6 +1,7 @@
 const url = "http://localhost:3000/posts";
 const imageMenu = document.querySelector(".image-menu");
-const detailsSection = document.querySelector(".item-details-container");
+const detailsContainer = document.querySelector(".item-details-container");
+const detailsDisplay = document.querySelector("#details-display");
 const userForm = document.querySelector("#user-form");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderImages(post) {
+    console.log(post, "POST");
     const linkElement = createElements("a", { href: "#" });
     const imgElement = createElements("img", {
       src: post.src,
@@ -33,6 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const titleElement = createElements("h2", { textContent: post.title });
 
       const captionElement = createElements("p", { textContent: post.caption });
+
+      const categoryElement = createElements("p", {
+        textContent: post.category,
+      });
 
       const displayImg = createElements("img", {
         src: post.src,
@@ -57,10 +63,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const likesWrapper = document.querySelector(".likes-wrapper");
       const outputDiv = document.querySelector("#output");
 
-      detailsSection.replaceChildren(titleElement, captionElement, displayImg);
+      detailsDisplay.replaceChildren(
+        titleElement,
+        captionElement,
+        categoryElement,
+        displayImg,
+      );
       if (likesWrapper) likesComponent(post, likesWrapper);
-      if (userForm) detailsSection.appendChild(userForm);
-      if (outputDiv) detailsSection.appendChild(outputDiv);
+      if (userForm) detailsContainer.appendChild(userForm);
+      if (outputDiv) detailsContainer.appendChild(outputDiv);
     });
 
     linkElement.appendChild(imgElement);
@@ -72,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const likesDisplay = likesWrapper.querySelector(".like-count");
     const likesBtn = likesWrapper.querySelector(".like-button");
 
-    detailsSection.appendChild(likesWrapper);
+    detailsContainer.appendChild(likesWrapper);
     likesWrapper.classList.remove("hidden");
     likesDisplay.textContent = count;
 
@@ -135,6 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
         src: formData.get("src"),
         caption: formData.get("caption"),
         likesCount: 0,
+        category: formData.get("category"),
       };
 
       addUserContent(newContent);
