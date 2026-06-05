@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return res.json();
     })
     .then((data) => {
-      data.forEach((post) => renderImages(post));
+      data.forEach((post) => renderContent(post));
     })
     .catch((err) => console.error("Fetch failed:", err));
 
@@ -21,8 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return element;
   }
 
-  function renderImages(post) {
-    console.log(post, "POST");
+  function renderContent(post) {
     const linkElement = createElements("a", { href: "#" });
     const imgElement = createElements("img", {
       src: post.src,
@@ -69,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         categoryElement,
         displayImg,
       );
+
       if (likesWrapper) likesComponent(post, likesWrapper);
       if (userForm) detailsContainer.appendChild(userForm);
       if (outputDiv) detailsContainer.appendChild(outputDiv);
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return res.json();
       })
       .then((savedPost) => {
-        renderImages(savedPost);
+        renderContent(savedPost);
       })
       .catch((err) => console.error("Error adding post:", err));
   }
