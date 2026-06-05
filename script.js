@@ -22,11 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderImages(post) {
     const linkElement = createElements("a", { href: "#" });
-    const imgElement = createElements("img", {
-      src: post.src,
-      alt: post.title,
-      className: "grid-photo",
-    });
+    const imgElement = createElements("img", { src: post.src, alt: post.title, className: "grid-photo" });
 
     imgElement.addEventListener("click", (e) => {
       e.preventDefault();
